@@ -28,6 +28,14 @@ data Direction = N | S | E | W deriving (Eq, Ord, Show, Read, Enum)
 canMoveTo :: Maze -> Position -> Direction -> Bool
 canMoveTo _ (0, _) W = False
 canMoveTo _ (_, 0) N = False
-canMoveTo m (_, b) E = not (fst (size m) == b)
-canMoveTo m (a, _) S = not (snd (size m) == a)
+canMoveTo m (_, y) E | fst (size m) + 1 == y = False
+canMoveTo m (x, _) S | snd (size m) + 1 == x = False
+canMoveTo m p S = case M.lookup p m of
+					  Just c  -> not $ southWall c
+					  Nothing -> True
+canMoveTo m p E = case M.lookup p m of
+					  Just c  -> not $ eastWall c
+					  Nothing -> True
+canMoveTo m (x,y) N = canMoveTo m (x, y-1) S
+canMoveTo m (x,y) W = canMoveTo m (x-1, y) E
 
