@@ -36,11 +36,11 @@ canMoveTo m p S = case M.lookup p m of
 canMoveTo m p E = case M.lookup p m of
 					  Just c  -> not $ eastWall c
 					  Nothing -> True
-canMoveTo m (x,y) N = canMoveTo m (x, y-1) S
-canMoveTo m (x,y) W = canMoveTo m (x-1, y) E
+canMoveTo m p N = canMoveTo m (move N p) S
+canMoveTo m p W = canMoveTo m (move W p) E
 
 move :: Direction -> Position -> Position
-move W (x, y) = (x-1, y)
-move E (x, y) = (x+1, y)
+move W (x, y) = (x - 1, y)
+move E (x, y) = (x + 1, y)
 move N (x, y) = (x, y - 1)
-move W (x, y) = (x-1, y)
+move S (x, y) = (x, y + 1)
