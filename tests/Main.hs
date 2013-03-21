@@ -18,12 +18,9 @@ main = hspec $ do
   describe "move" $ do
     it "can move north" $ do
       move N (1, 1) `shouldBe` (1, 0)
-    prop "going north then south leads to the same place" $ 
+    prop "going direction and going back  leads to the same place" $ 
       \p d -> move (opposite d) (move d p) == p
-    {-
-    prop "going west then east leads to the same place" $
-      \p -> move W (move E p) == p
-    -}
+
 
   describe "canMoveTo " $ do
     it "can not move South " $ do

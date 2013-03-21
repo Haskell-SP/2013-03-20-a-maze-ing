@@ -49,3 +49,18 @@ opposite N = S
 opposite S = N
 opposite E = W
 opposite W = E
+
+insertWall :: Maze -> Position -> Direction -> Maze
+insertWall m p d 
+	| canMoveTo m p d = case d of 
+							S -> Maze (size m) $ M.alter (setWall d) p (topology m) 
+							E -> Maze (size m) $ M.alter (setWall d) p (topology m) 
+							N -> insertWall m (move d p) (opposite d)
+							W -> insertWall m (move d p) (opposite d)
+	| otherwise       = m
+  where setWall S (Just (Cell _ e)) = Just $ Cell True  e
+        setWall E (Just (Cell s _)) = Just $ Cell s     True
+        setWall S Nothing           = Just $ Cell True  False
+        setWall E Nothing           = Just $ Cell False True
+
+
