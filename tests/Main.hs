@@ -28,3 +28,7 @@ main = hspec $ do
 
     it "can move South " $ do
       canMoveTo (empty (2,2)) (0, 0) S `shouldBe` True
+
+  describe "can insert walls " $ do
+    it "cant move into a wall" $ do
+      canMoveTo (insert (empty (2,2)) (0, 0) S) (0, 0) S `shouldBe` False
