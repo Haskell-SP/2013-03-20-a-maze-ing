@@ -8,7 +8,7 @@ import Data.Map (Map)
 
 data Cell = Cell {
     southWall :: Bool
-  , eastWall  :: Bool	
+  , eastWall  :: Bool
   } 
 
 data Maze = Maze

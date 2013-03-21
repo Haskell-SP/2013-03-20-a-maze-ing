@@ -31,4 +31,7 @@ main = hspec $ do
 
   describe "can insert walls " $ do
     it "cant move into a wall" $ do
-      canMoveTo (insert (empty (2,2)) (0, 0) S) (0, 0) S `shouldBe` False
+      canMoveTo (insertWall (empty (2,2)) (0, 0) S) (0, 0) S `shouldBe` False
+      
+    prop "cant move into random walls" $ 
+      \p d -> canMoveTo (insertWall (empty (fst p + 2, snd p + 2)) p d) p d == False
