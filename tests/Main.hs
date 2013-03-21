@@ -3,6 +3,12 @@ module Main (main) where
 import Test.Hspec
 import Test.Hspec.QuickCheck
 import Maze
+import qualified Data.Map as M
+import Test.QuickCheck
+
+instance Arbitrary Direction where
+  arbitrary = arbitraryBoundedEnum
+
 
 main :: IO ()
 main = hspec $ do
@@ -13,4 +19,15 @@ main = hspec $ do
     it "can move north" $ do
       move N (1, 1) `shouldBe` (1, 0)
     prop "going north then south leads to the same place" $ 
-      \p -> move S (move N p) == p
+      \p d -> move (opposite d) (move d p) == p
+    {-
+    prop "going west then east leads to the same place" $
+      \p -> move W (move E p) == p
+    -}
+
+  describe "canMoveTo " $ do
+    it "can not move South " $ do
+      canMoveTo (empty (1,1)) (0, 0) S `shouldBe` False
+
+    it "can move South " $ do
+      canMoveTo (empty (2,2)) (0, 0) S `shouldBe` True

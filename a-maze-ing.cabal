@@ -62,6 +62,8 @@ test-suite tests
       base
     , a-maze-ing
     , hspec
+    , containers
+    , QuickCheck
 
   hs-source-dirs: tests/ 
 
